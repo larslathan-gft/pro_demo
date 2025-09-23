@@ -43,7 +43,8 @@ public class CustomerRepository {
                     String email = row[3];
                     String phone = row[4];
                     String address = row[5];
-                    Customer customer = new Customer(id, firstName, lastName, email, phone, address);
+                    String ssn = row[6];
+                    Customer customer = new Customer(id, firstName, lastName, email, phone, address, ssn);
                     customers.add(customer);
                 }
             }

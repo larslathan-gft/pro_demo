@@ -45,7 +45,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St", "123-45-6789");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
@@ -55,7 +55,8 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("Carlos"))
                 .andExpect(jsonPath("$.lastName").value("López"))
                 .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"));
+                .andExpect(jsonPath("$.phone").value("555-9012"))
+                .andExpect(jsonPath("$.ssn").value("123-45-6789"));
     }
 
     @Test
