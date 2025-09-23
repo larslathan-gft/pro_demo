@@ -3,7 +3,9 @@ package com.example.demo.repository;
 import com.example.demo.model.Customer;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import java.util.logging.Level;
 import org.springframework.stereotype.Repository;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class CustomerRepository {
+    private static final Logger LOGGER = Logger.getLogger(CustomerRepository.class.getName());
 
     private final List<Customer> customers = new ArrayList<>();
 
@@ -49,7 +52,7 @@ public class CustomerRepository {
             }
 
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, "Error loading customers from CSV", e);
         }
     }
 
