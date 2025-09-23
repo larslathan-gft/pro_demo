@@ -25,9 +25,9 @@ public class CustomerRepository {
      * Lee el archivo CSV `customers.csv` de la carpeta resources/data y carga los registros en la lista.
      */
     private void loadCustomersFromCsv() {
-        try (InputStreamReader isr = new InputStreamReader(
-                getClass().getResourceAsStream("/data/customers.csv"));
-             CSVReader csvReader = new CSVReader(isr)) {
+        try {
+            InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/data/customers.csv"));
+             CSVReader csvReader = new CSVReader(isr);
 
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
