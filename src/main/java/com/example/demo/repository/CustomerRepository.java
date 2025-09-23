@@ -29,7 +29,7 @@ public class CustomerRepository {
             InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/data/customers.csv"));
             CSVReader csvReader = new CSVReader(isr);
 
-            long lineNumber = csvReader.getLinesRead()
+            long lineNumber = csvReader.getLinesRead();
 
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
