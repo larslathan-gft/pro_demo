@@ -1,0 +1,106 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>demo-csv-api</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>demo-csv-api</name>
+
+    <properties>
+        <java.version>11</java.version>
+        <spring-boot.version>2.7.6</spring-boot.version>
+    </properties>
+
+    <dependencies>
+        <!-- Dependencia de Spring Boot Starter Web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${spring-boot.version}</version>
+        </dependency>
+
+        <!-- OpenCSV para leer archivos CSV -->
+        <dependency>
+            <groupId>com.opencsv</groupId>
+            <artifactId>opencsv</artifactId>
+            <version>5.7.1</version>
+        </dependency>
+
+        <!-- Dependencias de testing -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring-boot.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Spring Boot Maven Plugin -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <!-- Simple and reliable JaCoCo configuration: attach the agent during tests; run reports via 'mvn verify' or 'mvn jacoco:report' -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- JaCoCo Maven Plugin for code coverage reports -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.11</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- SpotBugs Maven Plugin for static analysis -->
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <!-- Maintainer: setting SpotBugs plugin version to 4.9.2.0 for Java21 support; if unavailable, fallback to 4.7.3.0 -->
+                <version>4.9.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>spotbugs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!-- Directory for SpotBugs report files -->
+                    <outputDirectory>${project.build.directory}/spotbugs</outputDirectory>
+
+                    <!-- Enable XML report generation (preserves existing XML report) -->
+                    <xmlOutput>true</xmlOutput>
+                    <!-- Note: xmlOutputFile parameter removed; XML report will be generated at default location (target/spotbugs/spotbugsXml.xml) -->
+
+                    <!-- Enable plain text report generation -->
+                    <!-- Plain text report file location -->
+                    <outputFile>${project.build.directory}/spotbugs/spotbugs.txt</outputFile>
+                    <!-- Note for maintainers: If this parameter is unsupported, plain text report may not be generated -->        
+
+                    <!-- Both XML and plain text reports will be generated in the above directory -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

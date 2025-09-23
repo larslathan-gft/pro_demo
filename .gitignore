@@ -1,0 +1,6 @@
+.workspace/
+.settings
+.project
+.classpath
+target/
+.DS_Store

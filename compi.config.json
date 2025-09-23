@@ -1,0 +1,21 @@
+{
+  "tools": {
+    "maven_cli": {
+      "active": true
+    },
+    "attlasian": {
+      "active": true,
+      "config": {
+        "default_project": "Wynxx Sample Project",
+        "url": "https://larslathan-1758487236594.atlassian.net/"
+      }
+    },
+    "maven": {
+      "active": true,
+      "config": {}
+    }
+  },
+  "llm": {
+    "models": {}
+  }
+}

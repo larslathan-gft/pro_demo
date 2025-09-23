@@ -1,0 +1,4 @@
+id,firstName,lastName,email,phone,address
+1,Juan,Pérez,juan.perez@example.com,555-1234,123 Main St
+2,Ana,García,ana.garcia@example.com,555-5678,456 Elm St
+3,Carlos,López,carlos.lopez@example.com,555-9012,789 Oak St
