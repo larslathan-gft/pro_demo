@@ -3,7 +3,9 @@ package com.example.demo.repository;
 import com.example.demo.model.Customer;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import org.slf4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.List;
 
 @Repository
 public class CustomerRepository {
+    private static final Logger logger = LoggerFactory.getLogger(CustomerRepository.class);
 
     private final List<Customer> customers = new ArrayList<>();
 
@@ -25,11 +28,9 @@ public class CustomerRepository {
      * Lee el archivo CSV `customers.csv` de la carpeta resources/data y carga los registros en la lista.
      */
     private void loadCustomersFromCsv() {
-        try {
-            InputStreamReader isr = new InputStreamReader(getClass().getResourceAsStream("/data/customers.csv"));
-            CSVReader csvReader = new CSVReader(isr);
-
-            long lineNumber = csvReader.getLinesRead();
+        try (InputStreamReader isr = new InputStreamReader(
+                getClass().getResourceAsStream("/data/customers.csv"));
+             CSVReader csvReader = new CSVReader(isr)) {
 
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
@@ -45,27 +46,14 @@ public class CustomerRepository {
                     String email = row[3];
                     String phone = row[4];
                     String address = row[5];
-                    String ssn = row[6];
-                    Customer customer = createCustomerWithValidation(id, firstName, lastName, email, phone, address, ssn, "ACTIVE", true, "DEFAULT", System.currentTimeMillis(), "CSV_IMPORT", false, 0.0, "N/A");
+                    Customer customer = new Customer(id, firstName, lastName, email, phone, address);
                     customers.add(customer);
                 }
             }
 
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
+            logger.error("Error loading customers from CSV file", e);
         }
-    }
-
-    /**
-     * Creates a customer with extensive validation - CODE SMELL: Long Parameter List
-     */
-    private Customer createCustomerWithValidation(Long id, String firstName, String lastName, 
-                                                String email, String phone, String address, String ssn,
-                                                String status, boolean isActive, String category, 
-                                                long timestamp, String source, boolean isVerified,
-                                                double creditScore, String notes) {
-        // Lots of unnecessary parameters making this method hard to use and maintain
-        return new Customer(id, firstName, lastName, email, phone, address, ssn);
     }
 
     public List<Customer> findAll() {
@@ -74,7 +62,7 @@ public class CustomerRepository {
 
     public Customer findById(Long id) {
         return customers.stream()
-                .filter(c -> c.getId() == (id))
+                .filter(c -> c.getId().equals(id))
                 .findFirst()
                 .orElse(null);
     }
