@@ -46,7 +46,7 @@ public class CustomerRepository {
                     String phone = row[4];
                     String address = row[5];
                     String ssn = row[6];
-                    Customer customer = new Customer(id, firstName, lastName, email, phone, address, ssn);
+                    Customer customer = createCustomerWithValidation(id, firstName, lastName, email, phone, address, ssn, "ACTIVE", true, "DEFAULT", System.currentTimeMillis(), "CSV_IMPORT", false, 0.0, "N/A");
                     customers.add(customer);
                 }
             }
@@ -54,6 +54,18 @@ public class CustomerRepository {
         } catch (IOException | CsvException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Creates a customer with extensive validation - CODE SMELL: Long Parameter List
+     */
+    private Customer createCustomerWithValidation(Long id, String firstName, String lastName, 
+                                                String email, String phone, String address, String ssn,
+                                                String status, boolean isActive, String category, 
+                                                long timestamp, String source, boolean isVerified,
+                                                double creditScore, String notes) {
+        // Lots of unnecessary parameters making this method hard to use and maintain
+        return new Customer(id, firstName, lastName, email, phone, address, ssn);
     }
 
     public List<Customer> findAll() {
