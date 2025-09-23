@@ -16,7 +16,7 @@ import com.example.demo.service.CustomerService;
 import java.util.Arrays;
 
 @WebMvcTest(CustomerController.class)
-public class CustomerControllerTest {
+class CustomerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,7 +25,7 @@ public class CustomerControllerTest {
     private CustomerService customerService;
 
     @Test
-    public void testGetAllCustomers() throws Exception {
+    void testGetAllCustomers() throws Exception {
         // Mockeamos la respuesta del servicio
         given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
@@ -44,8 +44,8 @@ public class CustomerControllerTest {
     }
 
     @Test
-    public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St", "123-45-6789");
+    void testGetCustomerDetail_Found() throws Exception {
+        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
@@ -55,12 +55,11 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("Carlos"))
                 .andExpect(jsonPath("$.lastName").value("López"))
                 .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"))
-                .andExpect(jsonPath("$.ssn").value("123-45-6789"));
+                .andExpect(jsonPath("$.phone").value("555-9012"));
     }
 
     @Test
-    public void testGetCustomerDetail_NotFound() throws Exception {
+    void testGetCustomerDetail_NotFound() throws Exception {
         // Si no se encuentra el cliente, devolvemos null
         given(customerService.getCustomerById(anyLong())).willReturn(null);
 
