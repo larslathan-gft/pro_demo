@@ -62,7 +62,7 @@ public class CustomerRepository {
 
     public Customer findById(Long id) {
         return customers.stream()
-                .filter(c -> c.getId().equals(id))
+                .filter(c -> c.getId() == (id))
                 .findFirst()
                 .orElse(null);
     }
