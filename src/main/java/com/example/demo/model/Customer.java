@@ -7,19 +7,17 @@ public class Customer {
     private String email;
     private String phone;
     private String address;
-    private String ssn;
 
     public Customer() {
     }
 
-    public Customer(Long id, String firstName, String lastName, String email, String phone, String address, String ssn) {
+    public Customer(Long id, String firstName, String lastName, String email, String phone, String address) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.address = address;
-        this.ssn = ssn;
     }
 
     public Long getId() {
@@ -69,13 +67,4 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-
-    public String getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
-    
 }
