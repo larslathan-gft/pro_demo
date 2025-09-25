@@ -32,7 +32,7 @@ public class CustomerRepository {
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
 
-            int lineNumber = rows.size()
+            int lineNumber = rows.size();
 
             // La primera fila se asume como cabecera: id, firstName, lastName, email, phone, address, ssn
             // Recorremos desde la fila 2
