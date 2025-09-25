@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.model.Customer;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import java.util.logging.Logger;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
+    private static final Logger LOGGER = Logger.getLogger(CustomerRepository.class.getName());
 public class CustomerRepository {
 
     private final List<Customer> customers = new ArrayList<>();
@@ -32,25 +34,24 @@ public class CustomerRepository {
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
 
-            // La primera fila se asume como cabecera: id, firstName, lastName, email, phone, address, ssn
+            // La primera fila se asume como cabecera: id, firstName, lastName, email, phone
             // Recorremos desde la fila 2
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
-                if (row.length >= 7) {
+                if (row.length >= 6) {
                     Long id = Long.parseLong(row[0]);
                     String firstName = row[1];
                     String lastName = row[2];
                     String email = row[3];
                     String phone = row[4];
                     String address = row[5];
-                    String ssn = row[6];
-                    Customer customer = new Customer(id, firstName, lastName, email, phone, address, ssn);
+                    Customer customer = new Customer(id, firstName, lastName, email, phone, address);
                     customers.add(customer);
                 }
             }
 
         } catch (IOException | CsvException e) {
-            e.printStackTrace();
+            LOGGER.severe("Error loading customers from CSV: " + e.getMessage());
         }
     }
 
