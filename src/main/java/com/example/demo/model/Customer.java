@@ -7,17 +7,19 @@ public class Customer {
     private String email;
     private String phone;
     private String address;
+    private String ssn;
 
     public Customer() {
     }
 
-    public Customer(Long id, String firstName, String lastName, String email, String phone, String address) {
+    public Customer(Long id, String firstName, String lastName, String email, String phone, String address, String ssn) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.ssn = ssn;
     }
 
     public Long getId() {
@@ -67,5 +69,22 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-    
+
+    /**
+     * Gets the Social Security Number (SSN) of the customer.
+     *
+     * @return the SSN as a String
+     */
+    public String getSsn() {
+        return ssn;
+    }
+
+    /**
+     * Sets the Social Security Number (SSN) of the customer.
+     *
+     * @param ssn the SSN to set
+     */
+    public void setSsn(String ssn) {
+        this.ssn = ssn;
+    }
 }
