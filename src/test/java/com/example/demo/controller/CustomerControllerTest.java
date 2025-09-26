@@ -29,8 +29,8 @@ public class CustomerControllerTest {
         // Mockeamos la respuesta del servicio
         given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
-                        new Customer(1L, "Juan", "Pérez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "García", "ana@test.com", "555-5678", "456 Elm St")
+                        new Customer(1L, "Juan", "Pérez", "juan@test.com", "555-1234", "123 Main St", "123"),
+                        new Customer(2L, "Ana", "García", "ana@test.com", "555-5678", "456 Elm St", "123")
                 )
         );
 
@@ -45,7 +45,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St", "123");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
