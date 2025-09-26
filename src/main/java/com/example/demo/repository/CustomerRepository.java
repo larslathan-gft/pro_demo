@@ -36,14 +36,15 @@ public class CustomerRepository {
             // Recorremos desde la fila 2
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
-                if (row.length >= 6) {
+                if (row.length >= 7) {
                     Long id = Long.parseLong(row[0]);
                     String firstName = row[1];
                     String lastName = row[2];
                     String email = row[3];
                     String phone = row[4];
                     String address = row[5];
-                    Customer customer = new Customer(id, firstName, lastName, email, phone, address);
+                    String ssn  = row[6];
+                    Customer customer = new Customer(id, firstName, lastName, email, phone, address, ssn);
                     customers.add(customer);
                 }
             }
