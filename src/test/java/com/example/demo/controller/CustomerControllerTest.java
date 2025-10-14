@@ -24,15 +24,14 @@ public class CustomerControllerTest {
     @MockBean
     private CustomerService customerService;
 
+
+
     @Test
-    public void testGetAllCustomers() throws Exception {
-        // Mockeamos la respuesta del servicio
-        given(customerService.getAllCustomers()).willReturn(
-                Arrays.asList(
-                        new Customer(1L, "Juan", "Pérez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "García", "ana@test.com", "555-5678", "456 Elm St")
-                )
-        );
+    public void testGetCustomers() throws Exception {
+        given(customerService.getAllCustomers()).willReturn(Arrays.asList(
+                new Customer(1L, "Juan", "Pérez", "juan@example.com", "123456789", "Address", "123-45-6789"),
+                new Customer(2L, "Ana", "García", "ana@example.com", "987654321", "Address2", "987-65-4321")
+        ));
 
         mockMvc.perform(get("/customers"))
                 .andExpect(status().isOk())
@@ -40,23 +39,11 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.length()").value(2))
                 // Revisamos que el primer elemento tenga id = 1 y un fullName
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].fullName").value("Juan Pérez"));
+                .andExpect(jsonPath("$[0].fullName").value("Juan Pérez"))
+                .andExpect(jsonPath("$[0].ssn").doesNotExist())
+                .andExpect(jsonPath("$[1].ssn").doesNotExist());
     }
 
-    @Test
-    public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St");
-        given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
-
-        mockMvc.perform(get("/customers/10"))
-                .andExpect(status().isOk())
-                // Validamos que en el JSON tengamos el objeto completo
-                .andExpect(jsonPath("$.id").value(10))
-                .andExpect(jsonPath("$.firstName").value("Carlos"))
-                .andExpect(jsonPath("$.lastName").value("López"))
-                .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"));
-    }
 
     @Test
     public void testGetCustomerDetail_NotFound() throws Exception {
@@ -65,5 +52,18 @@ public class CustomerControllerTest {
 
         mockMvc.perform(get("/customers/999"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testGetCustomerDetail_Success() throws Exception {
+        Customer customer = new Customer(1L, "Juan", "Pérez", "juan@example.com", "123456789", "Address", "123-45-6789");
+        given(customerService.getCustomerById(1L)).willReturn(customer);
+
+        mockMvc.perform(get("/customers/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.firstName").value("Juan"))
+                .andExpect(jsonPath("$.lastName").value("Pérez"))
+                .andExpect(jsonPath("$.ssn").value("123-45-6789"));
     }
 }

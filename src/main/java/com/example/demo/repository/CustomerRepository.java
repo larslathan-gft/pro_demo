@@ -32,19 +32,24 @@ public class CustomerRepository {
             // Leemos todas las líneas
             List<String[]> rows = csvReader.readAll();
 
-            // La primera fila se asume como cabecera: id, firstName, lastName, email, phone
+            // La primera fila se asume como cabecera: id, firstName, lastName, email, phone, address, ssn
             // Recorremos desde la fila 2
             for (int i = 1; i < rows.size(); i++) {
                 String[] row = rows.get(i);
-                if (row.length >= 6) {
-                    Long id = Long.parseLong(row[0]);
-                    String firstName = row[1];
-                    String lastName = row[2];
-                    String email = row[3];
-                    String phone = row[4];
-                    String address = row[5];
-                    Customer customer = new Customer(id, firstName, lastName, email, phone, address);
-                    customers.add(customer);
+                if (row.length >= 7) {
+                    try {
+                        Long id = Long.parseLong(row[0]);
+                        String firstName = row[1];
+                        String lastName = row[2];
+                        String email = row[3];
+                        String phone = row[4];
+                        String address = row[5];
+                        String ssn = row[6];
+                        Customer customer = new Customer(id, firstName, lastName, email, phone, address, ssn);
+                        customers.add(customer);
+                    } catch (NumberFormatException e) {
+                        // Skip invalid rows
+                    }
                 }
             }
 
