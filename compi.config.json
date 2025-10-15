@@ -13,6 +13,13 @@
     "maven": {
       "active": true,
       "config": {}
+    },
+    "atlassian": {
+      "active": true,
+      "config": {
+        "default_project": "",
+        "url": "https://larslathan-1758487236594.atlassian.net/"
+      }
     }
   },
   "llm": {
