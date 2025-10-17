@@ -17,7 +17,7 @@
     "atlassian": {
       "active": true,
       "config": {
-        "default_project": "",
+        "default_project": "Wynxx Sample Project",
         "url": "https://larslathan-1758487236594.atlassian.net/"
       }
     }
