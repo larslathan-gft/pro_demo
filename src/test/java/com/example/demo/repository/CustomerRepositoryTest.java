@@ -30,7 +30,7 @@ public class CustomerRepositoryTest {
         Customer customer = customerRepository.findById(1L);
         Assertions.assertNotNull(customer);
         Assertions.assertEquals("Juan", customer.getFirstName());
-        Assertions.assertEquals("Pérez", customer.getLastName());
+        Assertions.assertEquals("Perez", customer.getLastName());
     }
 
     @Test

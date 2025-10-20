@@ -29,8 +29,8 @@ public class CustomerControllerTest {
         // Mockeamos la respuesta del servicio
         given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
-                        new Customer(1L, "Juan", "Pérez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "García", "ana@test.com", "555-5678", "456 Elm St")
+                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St"),
+                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St")
                 )
         );
 
@@ -40,12 +40,12 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.length()").value(2))
                 // Revisamos que el primer elemento tenga id = 1 y un fullName
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].fullName").value("Juan Pérez"));
+                .andExpect(jsonPath("$[0].fullName").value("Juan Perez"));
     }
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "López", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
@@ -53,7 +53,7 @@ public class CustomerControllerTest {
                 // Validamos que en el JSON tengamos el objeto completo
                 .andExpect(jsonPath("$.id").value(10))
                 .andExpect(jsonPath("$.firstName").value("Carlos"))
-                .andExpect(jsonPath("$.lastName").value("López"))
+                .andExpect(jsonPath("$.lastName").value("Lopez"))
                 .andExpect(jsonPath("$.email").value("carlos@test.com"))
                 .andExpect(jsonPath("$.phone").value("555-9012"));
     }
