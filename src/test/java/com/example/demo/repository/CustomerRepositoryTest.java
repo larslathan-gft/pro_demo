@@ -31,6 +31,7 @@ public class CustomerRepositoryTest {
         Assertions.assertNotNull(customer);
         Assertions.assertEquals("Juan", customer.getFirstName());
         Assertions.assertEquals("Perez", customer.getLastName());
+        Assertions.assertEquals("111-00-1111", customer.getSsn());
     }
 
     @Test
