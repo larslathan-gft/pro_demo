@@ -34,14 +34,19 @@ public class CustomerController {
      * Endpoint para obtener el detalle completo de un cliente por su ID
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerDetail(@PathVariable Long id) {
+
+    public ResponseEntity<CustomerDetailDTO> getCustomerDetail(@PathVariable Long id) {
         Customer customer = customerService.getCustomerById(id);
         if (customer != null) {
-            return ResponseEntity.ok(customer);
+            CustomerDetailDTO customerDetailDTO = new CustomerDetailDTO(customer.getId(), 
+                    customer.getFirstName() + " " + customer.getLastName(), 
+                    customer.getSsn());
+            return ResponseEntity.ok(customerDetailDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     /**
      * DTO interno para retornar información básica de un cliente.
@@ -61,6 +66,33 @@ public class CustomerController {
 
         public String getFullName() {
             return fullName;
+        }
+    }
+
+    /**
+     * DTO para retornar información detallada de un cliente, incluyendo SSN.
+     */
+    static class CustomerDetailDTO {
+        private Long id;
+        private String fullName;
+        private String socialSecurityNumber;
+
+        public CustomerDetailDTO(Long id, String fullName, String socialSecurityNumber) {
+            this.id = id;
+            this.fullName = fullName;
+            this.socialSecurityNumber = socialSecurityNumber;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public String getFullName() {
+            return fullName;
+        }
+
+        public String getSocialSecurityNumber() {
+            return socialSecurityNumber;
         }
     }
 }

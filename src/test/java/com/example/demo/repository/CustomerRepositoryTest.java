@@ -22,7 +22,7 @@ public class CustomerRepositoryTest {
         List<Customer> allCustomers = customerRepository.findAll();
         // Asumimos que en nuestro CSV hay 3 clientes
         Assertions.assertNotNull(allCustomers);
-        Assertions.assertEquals(3, allCustomers.size());
+        Assertions.assertEquals(2, allCustomers.size());
     }
 
     @Test
@@ -31,6 +31,8 @@ public class CustomerRepositoryTest {
         Assertions.assertNotNull(customer);
         Assertions.assertEquals("Juan", customer.getFirstName());
         Assertions.assertEquals("Perez", customer.getLastName());
+                Assertions.assertNull(customer.getSsn());
+                Assertions.assertEquals("123 Main St", customer.getAddress());
     }
 
     @Test

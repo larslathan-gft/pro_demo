@@ -29,23 +29,25 @@ public class CustomerControllerTest {
         // Mockeamos la respuesta del servicio
         given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
-                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St")
+                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St", "111-22-3333"),
+                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St", "444-55-6666")
                 )
         );
 
         mockMvc.perform(get("/customers"))
-                .andExpect(status().isOk())
-                // Validamos que el JSON contenga la lista con 2 elementos
-                .andExpect(jsonPath("$.length()").value(2))
-                // Revisamos que el primer elemento tenga id = 1 y un fullName
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].fullName").value("Juan Perez"));
+                        .andExpect(status().isOk())
+                        .andExpect(jsonPath("$").isArray())
+                        .andExpect(jsonPath("$[0].id").value(1))
+                        .andExpect(jsonPath("$[0].firstName").value("Juan"))
+                        .andExpect(jsonPath("$[0].lastName").value("Perez"))
+                        .andExpect(jsonPath("$[0].email").value("juan@test.com"))
+                        .andExpect(jsonPath("$[0].phone").value("555-1234"))
+                        .andExpect(jsonPath("$[0].address").value("123 Main St"));
     }
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St", "456-78-9012");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
@@ -55,7 +57,8 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("Carlos"))
                 .andExpect(jsonPath("$.lastName").value("Lopez"))
                 .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"));
+                .andExpect(jsonPath("$.phone").value("555-9012"))
+                                .andExpect(jsonPath("$.address").value("789 Pine St"));
     }
 
     @Test
