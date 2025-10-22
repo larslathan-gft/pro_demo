@@ -26,36 +26,38 @@ public class CustomerControllerTest {
 
     @Test
     public void testGetAllCustomers() throws Exception {
-        // Mockeamos la respuesta del servicio
-        given(customerService.getAllCustomers()).willReturn(
+        // Mock the service response
+            given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
-                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St")
+                    new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St", "111-11-1111"),
+                    new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St", "222-22-2222")
                 )
-        );
+            );
 
-        mockMvc.perform(get("/customers"))
+            mockMvc.perform(get("/customers"))
                 .andExpect(status().isOk())
-                // Validamos que el JSON contenga la lista con 2 elementos
+                // Validate JSON contains a list with 2 elements
                 .andExpect(jsonPath("$.length()").value(2))
-                // Revisamos que el primer elemento tenga id = 1 y un fullName
+                // Check that the first element has id = 1, fullName, and ssn
                 .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].fullName").value("Juan Perez"));
+                .andExpect(jsonPath("$[0].fullName").value("Juan Perez"))
+                .andExpect(jsonPath("$[0].ssn").value("111-11-1111"));
     }
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St", "333-33-3333");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
-                .andExpect(status().isOk())
-                // Validamos que en el JSON tengamos el objeto completo
-                .andExpect(jsonPath("$.id").value(10))
-                .andExpect(jsonPath("$.firstName").value("Carlos"))
-                .andExpect(jsonPath("$.lastName").value("Lopez"))
-                .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"));
+            .andExpect(status().isOk())
+            // Verify complete JSON object
+            .andExpect(jsonPath("$.id").value(10))
+            .andExpect(jsonPath("$.firstName").value("Carlos"))
+            .andExpect(jsonPath("$.lastName").value("Lopez"))
+            .andExpect(jsonPath("$.email").value("carlos@test.com"))
+            .andExpect(jsonPath("$.phone").value("555-9012"))
+            .andExpect(jsonPath("$.ssn").value("333-33-3333"));
     }
 
     @Test
