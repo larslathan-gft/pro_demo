@@ -27,7 +27,9 @@ public class CustomerRepositoryTest {
 
     @Test
     public void testFindById_Existing() {
+
         Customer customer = customerRepository.findById(1L);
+        Assertions.assertEquals("123-45-6789", customer.getSsn());
         Assertions.assertNotNull(customer);
         Assertions.assertEquals("Juan", customer.getFirstName());
         Assertions.assertEquals("Perez", customer.getLastName());

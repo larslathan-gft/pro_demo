@@ -29,8 +29,8 @@ public class CustomerControllerTest {
         // Mockeamos la respuesta del servicio
         given(customerService.getAllCustomers()).willReturn(
                 Arrays.asList(
-                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St"),
-                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St")
+                        new Customer(1L, "Juan", "Perez", "juan@test.com", "555-1234", "123 Main St", "123-45-6789"),
+                        new Customer(2L, "Ana", "Garcia", "ana@test.com", "555-5678", "456 Elm St", "987-65-4321")
                 )
         );
 
@@ -45,7 +45,7 @@ public class CustomerControllerTest {
 
     @Test
     public void testGetCustomerDetail_Found() throws Exception {
-        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St");
+        Customer mockCustomer = new Customer(10L, "Carlos", "Lopez", "carlos@test.com", "555-9012", "789 Pine St", "456-78-9012");
         given(customerService.getCustomerById(10L)).willReturn(mockCustomer);
 
         mockMvc.perform(get("/customers/10"))
@@ -55,7 +55,8 @@ public class CustomerControllerTest {
                 .andExpect(jsonPath("$.firstName").value("Carlos"))
                 .andExpect(jsonPath("$.lastName").value("Lopez"))
                 .andExpect(jsonPath("$.email").value("carlos@test.com"))
-                .andExpect(jsonPath("$.phone").value("555-9012"));
+                .andExpect(jsonPath("$.phone").value("555-9012"))
+                                .andExpect(jsonPath("$.ssn").value("456-78-9012"));
     }
 
     @Test

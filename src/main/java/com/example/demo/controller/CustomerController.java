@@ -31,15 +31,61 @@ public class CustomerController {
     }
 
     /**
-     * Endpoint para obtener el detalle completo de un cliente por su ID
-     */
+    * Endpoint para obtener el detalle completo de un cliente por su ID, incluyendo SSN.
+    */
     @GetMapping("/{id}")
-    public ResponseEntity<Customer> getCustomerDetail(@PathVariable Long id) {
+    public ResponseEntity<CustomerDTO> getCustomerDetail(@PathVariable Long id) {
         Customer customer = customerService.getCustomerById(id);
         if (customer != null) {
-            return ResponseEntity.ok(customer);
+            CustomerDTO customerDTO = new CustomerDTO(customer.getId(), customer.getFirstName(), customer.getLastName(), customer.getEmail(), customer.getPhone(), customer.getAddress(), customer.getSsn());
+            return ResponseEntity.ok(customerDTO);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+    * DTO para retornar información completa de un cliente, incluyendo SSN.
+    */
+    static class CustomerDTO {
+        private Long id;
+        private String firstName;
+        private String lastName;
+        private String email;
+        private String phone;
+        private String address;
+        private String ssn;
+
+        public CustomerDTO(Long id, String firstName, String lastName, String email, String phone, String address, String ssn) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.phone = phone;
+            this.address = address;
+            this.ssn = ssn;
+        }
+
+        public Long getId() {
+            return id;
+        }
+        public String getFirstName() {
+            return firstName;
+        }
+        public String getLastName() {
+            return lastName;
+        }
+        public String getEmail() {
+            return email;
+        }
+        public String getPhone() {
+            return phone;
+        }
+        public String getAddress() {
+            return address;
+        }
+        public String getSsn() {
+            return ssn;
         }
     }
 
