@@ -23,6 +23,9 @@ public class CustomerRepositoryTest {
         // Asumimos que en nuestro CSV hay 3 clientes
         Assertions.assertNotNull(allCustomers);
         Assertions.assertEquals(3, allCustomers.size());
+        Assertions.assertEquals("123-45-6789", allCustomers.get(0).getSsn());
+        Assertions.assertEquals("987-65-4321", allCustomers.get(1).getSsn());
+        Assertions.assertEquals("741-85-1234", allCustomers.get(2).getSsn());
     }
 
     @Test
