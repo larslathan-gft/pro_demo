@@ -6,7 +6,8 @@ public class Customer {
     private String lastName;
     private String email;
     private String phone;
-    private String address;
+        private String ssn;
+        private String address;
 
     public Customer() {
     }
@@ -67,5 +68,12 @@ public class Customer {
     public void setAddress(String address) {
         this.address = address;
     }
-    
-}
+
+        public String getSsn() {
+            return ssn;
+        }
+
+        public void setSsn(String ssn) {
+            this.ssn = ssn;
+        }
+    }

@@ -42,8 +42,10 @@ public class CustomerRepository {
                     String lastName = row[2];
                     String email = row[3];
                     String phone = row[4];
-                    String address = row[5];
+                    String ssn = row[5];
+                    String address = row[6];
                     Customer customer = new Customer(id, firstName, lastName, email, phone, address);
+                    customer.setSsn(ssn);
                     customers.add(customer);
                 }
             }
